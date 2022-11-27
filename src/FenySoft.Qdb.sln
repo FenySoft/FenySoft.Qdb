@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FenySoft.Qdb", "FenySoft.Qdb\FenySoft.Qdb.csproj", "{36750DFF-2F7C-4017-BEBC-08123B015A94}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{DE37F544-FA8B-493F-A3B5-7BEBF0694B77}"
+	ProjectSection(SolutionItems) = preProject
+		..\docs\index.md = ..\docs\index.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{88FB952B-7FDB-441C-82F3-FB66883462BC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{587703AB-50DD-4094-A9E9-B69C8FBC73BB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{D698B085-1648-4F1D-A4BE-9BA504E60B2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FenySoft.Qdb.Tests", "FenySoft.Qdb.Tests\FenySoft.Qdb.Tests.csproj", "{9C208D48-55DE-4B87-B4AA-0317804AFD66}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FenySoft.Core", "..\..\FenySoft.Core\src\FenySoft.Core\FenySoft.Core.csproj", "{1B3364AD-4627-4003-A984-FF75A040EA69}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{36750DFF-2F7C-4017-BEBC-08123B015A94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36750DFF-2F7C-4017-BEBC-08123B015A94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36750DFF-2F7C-4017-BEBC-08123B015A94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36750DFF-2F7C-4017-BEBC-08123B015A94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C208D48-55DE-4B87-B4AA-0317804AFD66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C208D48-55DE-4B87-B4AA-0317804AFD66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C208D48-55DE-4B87-B4AA-0317804AFD66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C208D48-55DE-4B87-B4AA-0317804AFD66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B3364AD-4627-4003-A984-FF75A040EA69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B3364AD-4627-4003-A984-FF75A040EA69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B3364AD-4627-4003-A984-FF75A040EA69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B3364AD-4627-4003-A984-FF75A040EA69}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{36750DFF-2F7C-4017-BEBC-08123B015A94} = {D698B085-1648-4F1D-A4BE-9BA504E60B2C}
+		{9C208D48-55DE-4B87-B4AA-0317804AFD66} = {88FB952B-7FDB-441C-82F3-FB66883462BC}
+		{1B3364AD-4627-4003-A984-FF75A040EA69} = {D698B085-1648-4F1D-A4BE-9BA504E60B2C}
+	EndGlobalSection
+EndGlobal
