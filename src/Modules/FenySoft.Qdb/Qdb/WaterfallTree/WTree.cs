@@ -73,7 +73,7 @@ namespace FenySoft.Qdb.WaterfallTree
                 if (handle != HANDLE_SETTINGS)
                     throw new Exception("Logical error.");
 
-                scheme = new WaterfallTree.Scheme();
+                scheme = new Scheme();
                 handle = heap.ObtainNewHandle();
                 if (handle != HANDLE_SCHEME)
                     throw new Exception("Logical error.");
@@ -491,7 +491,7 @@ namespace FenySoft.Qdb.WaterfallTree
 
         private void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!disposed)
             {
                 if (disposing)
                 {

@@ -25,6 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\..\..\FenySoft.Core\src\Modules\FenySoft.Core\FenySoft.Core.csproj" />
       <ProjectReference Include="..\..\..\FenySoft.Core\src\FenySoft.Core\FenySoft.Core.csproj" />
     </ItemGroup>
 

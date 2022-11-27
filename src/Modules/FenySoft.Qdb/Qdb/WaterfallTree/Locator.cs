@@ -131,7 +131,7 @@ namespace FenySoft.Qdb.WaterfallTree
                 writer.Write(VERSION);
 
                 writer.Write(ID);
-                if (ID == Locator.MIN.ID)
+                if (ID == MIN.ID)
                     return;
 
                 writer.Write(IsDeleted);
@@ -198,8 +198,8 @@ namespace FenySoft.Qdb.WaterfallTree
                 throw new Exception("Invalid Locator version.");
 
             long id = reader.ReadInt64();
-            if (id == Locator.MIN.ID)
-                return Locator.MIN;
+            if (id == MIN.ID)
+                return MIN;
 
             bool isDeleted = reader.ReadBoolean();
 
@@ -309,12 +309,12 @@ namespace FenySoft.Qdb.WaterfallTree
 
         public int CompareTo(Locator other)
         {
-            return this.ID.CompareTo(other.ID);
+            return ID.CompareTo(other.ID);
         }
 
         public bool Equals(Locator other)
         {
-            return this.ID == other.ID;
+            return ID == other.ID;
         }
 
         public override bool Equals(object obj)
@@ -337,8 +337,8 @@ namespace FenySoft.Qdb.WaterfallTree
 
         public static bool operator ==(Locator x, Locator y)
         {
-            bool xNotNull = !Object.ReferenceEquals(x, null);
-            bool yNotNull = !Object.ReferenceEquals(y, null);
+            bool xNotNull = !ReferenceEquals(x, null);
+            bool yNotNull = !ReferenceEquals(y, null);
 
             if (xNotNull && yNotNull)
                 return x.Equals(y);

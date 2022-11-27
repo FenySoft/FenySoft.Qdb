@@ -137,7 +137,7 @@ namespace FenySoft.Qdb.WaterfallTree
                 IEnumerable<KeyValuePair<Locator, IOperationCollection>> enumerable;
 
                 if (Count == 0)
-                    enumerable = System.Linq.Enumerable.Empty<KeyValuePair<Locator, IOperationCollection>>();
+                    enumerable = Enumerable.Empty<KeyValuePair<Locator, IOperationCollection>>();
                 else if (Count == 1)
                     enumerable = new KeyValuePair<Locator, IOperationCollection>[] { new KeyValuePair<Locator, IOperationCollection>(Operations.Locator, Operations) };
                 else

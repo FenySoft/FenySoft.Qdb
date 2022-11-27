@@ -31,7 +31,7 @@ namespace FenySoft.Qdb.Database
         {
             var stream = new OptimizedFileStream(fileName, FileMode.OpenOrCreate);
 
-            return STSdb.FromStream(stream);
+            return FromStream(stream);
         }
 
         public static ITStorageEngine FromNetwork(string host, int port = 7182)

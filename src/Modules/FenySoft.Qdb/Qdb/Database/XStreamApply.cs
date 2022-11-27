@@ -9,7 +9,7 @@ namespace FenySoft.Qdb.Database
 {
     public class XStreamApply : IApply
     {
-        const int BLOCK_SIZE = XFile.BLOCK_SIZE;
+        const int BLOCK_SIZE = XStream.BLOCK_SIZE;
 
         public XStreamApply(Locator path)
         {

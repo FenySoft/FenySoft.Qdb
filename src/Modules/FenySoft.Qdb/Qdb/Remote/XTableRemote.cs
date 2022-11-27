@@ -396,25 +396,25 @@ namespace FenySoft.Qdb.Remote
 
         private void GetDescriptor()
         {
-            XTableDescriptorGetCommand command = new XTableDescriptorGetCommand(this.Descriptor);
+            XTableDescriptorGetCommand command = new XTableDescriptorGetCommand(Descriptor);
 
             CommandCollection collection = new CommandCollection(1);
             collection.Add(command);
 
-            collection = StorageEngine.Execute(this.Descriptor, collection);
+            collection = StorageEngine.Execute(Descriptor, collection);
             XTableDescriptorGetCommand resultCommand = (XTableDescriptorGetCommand)collection[0];
 
-            this.Descriptor = resultCommand.Descriptor;
+            Descriptor = resultCommand.Descriptor;
         }
 
         private void SetDescriptor()
         {
-            XTableDescriptorSetCommand command = new XTableDescriptorSetCommand(this.Descriptor);
+            XTableDescriptorSetCommand command = new XTableDescriptorSetCommand(Descriptor);
 
             CommandCollection collection = new CommandCollection(1);
             collection.Add(command);
 
-            collection = StorageEngine.Execute(this.Descriptor, collection);
+            collection = StorageEngine.Execute(Descriptor, collection);
             XTableDescriptorSetCommand resultCommand = (XTableDescriptorSetCommand)collection[0]; 
         }
 
@@ -428,20 +428,20 @@ namespace FenySoft.Qdb.Remote
             CommandCollection collection = new CommandCollection(1);
 
             // Set the local descriptor
-            command = new XTableDescriptorSetCommand(this.Descriptor);
+            command = new XTableDescriptorSetCommand(Descriptor);
             collection.Add(command);
 
-            StorageEngine.Execute(this.Descriptor, collection);
+            StorageEngine.Execute(Descriptor, collection);
 
             // Get the local descriptor
-            command = new XTableDescriptorGetCommand(this.Descriptor);
+            command = new XTableDescriptorGetCommand(Descriptor);
             collection.Clear();
 
             collection.Add(command);
-            collection = StorageEngine.Execute(this.Descriptor, collection);
+            collection = StorageEngine.Execute(Descriptor, collection);
 
             XTableDescriptorGetCommand resultCommand = (XTableDescriptorGetCommand)collection[0];
-            this.Descriptor = resultCommand.Descriptor;
+            Descriptor = resultCommand.Descriptor;
         }
     }
 }

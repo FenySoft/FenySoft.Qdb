@@ -52,7 +52,7 @@ namespace FenySoft.Qdb.WaterfallTree
 
             public bool IsRoot
             {
-                get { return Object.ReferenceEquals(Branch.Tree.RootBranch, Branch); }
+                get { return ReferenceEquals(Branch.Tree.RootBranch, Branch); }
             }
 
             public NodeState State
@@ -106,10 +106,10 @@ namespace FenySoft.Qdb.WaterfallTree
                 Node node;
                 switch (branch.NodeType)
                 {
-                    case WTree.NodeType.Leaf:
+                    case NodeType.Leaf:
                         node = new LeafNode(branch, true);
                         break;
-                    case WTree.NodeType.Internal:
+                    case NodeType.Internal:
                         node = new InternalNode(branch, new BranchCollection(), true);
                         break;
                     default:

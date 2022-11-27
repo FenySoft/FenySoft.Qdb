@@ -35,7 +35,7 @@ namespace FenySoft.Qdb.WaterfallTree
                 Locator locator = operations.Locator;
 
                 var last = Branches[Branches.Count - 1];
-                if (Object.ReferenceEquals(last.Key.Locator, locator) && locator.KeyComparer.Compare(last.Key.Key, operations[0].FromKey) <= 0)
+                if (ReferenceEquals(last.Key.Locator, locator) && locator.KeyComparer.Compare(last.Key.Key, operations[0].FromKey) <= 0)
                 {
                     Branch branch = last.Value;
                     branch.ApplyToCache(operations);

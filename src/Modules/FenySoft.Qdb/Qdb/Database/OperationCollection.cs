@@ -60,16 +60,16 @@ namespace FenySoft.Qdb.Database
                 AreAllMonotoneAndPoint = false;
             else
             {
-                if (AreAllMonotoneAndPoint && this.Count > 0 && operations.Count > 0 && Locator.KeyComparer.Compare(this[Count - 1].FromKey, operations[0].FromKey) >= 0)
+                if (AreAllMonotoneAndPoint && Count > 0 && operations.Count > 0 && Locator.KeyComparer.Compare(this[Count - 1].FromKey, operations[0].FromKey) >= 0)
                     AreAllMonotoneAndPoint = false;
             }
 
-            if (operations.CommonAction != this.CommonAction)
+            if (operations.CommonAction != CommonAction)
             {
-                if (this.Count == 0)
-                    this.CommonAction = operations.CommonAction;
+                if (Count == 0)
+                    CommonAction = operations.CommonAction;
                 else if (operations.Count > 0)
-                    this.CommonAction = OperationCode.UNDEFINED;
+                    CommonAction = OperationCode.UNDEFINED;
             }
 
             var oprs = operations as OperationCollection;

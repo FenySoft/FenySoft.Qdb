@@ -23,7 +23,7 @@
             public Branch(WTree tree, NodeType nodeType)
                 : this(tree, nodeType, tree.heap.ObtainNewHandle())
             {
-                node = WTree.Node.Create(this);
+                node = Node.Create(this);
             }
 
             public override string ToString()
@@ -66,7 +66,7 @@
                     }
                     else
                     {
-                        node = WTree.Node.Create(this);
+                        node = Node.Create(this);
                         node.Load();
                     }
 

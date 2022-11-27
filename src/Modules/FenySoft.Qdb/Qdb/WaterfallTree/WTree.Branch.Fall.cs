@@ -33,7 +33,7 @@ namespace FenySoft.Qdb.WaterfallTree
                 //1. Apply cache
                 if (cache != null)
                 {
-                    if (cache.Count == 1 || node.Type == WTree.NodeType.Leaf)
+                    if (cache.Count == 1 || node.Type == NodeType.Leaf)
                     {
                         foreach (var kv in cache)
                         {
@@ -62,14 +62,14 @@ namespace FenySoft.Qdb.WaterfallTree
                 }
                 
                 //2. Maintenance
-                if (node.Type == WTree.NodeType.Internal)
+                if (node.Type == NodeType.Internal)
                     ((InternalNode)node).Maintenance(level, token);
                 branch.NodeState = node.State;
 
                 if (node.IsExpiredFromCache && (param.WalkAction & WalkAction.CacheFlush) == WalkAction.CacheFlush)
                     param = new Params(param.WalkMethod, WalkAction.Store | WalkAction.Unload, param.WalkParams, param.Sink);
 
-                if (node.Type == WTree.NodeType.Internal)
+                if (node.Type == NodeType.Internal)
                 {
                     if (param.WalkMethod != WalkMethod.Current)
                     {
@@ -78,13 +78,13 @@ namespace FenySoft.Qdb.WaterfallTree
                     }
                 }
 
-                if ((param.WalkAction & WalkAction.Store) == WTree.WalkAction.Store)
+                if ((param.WalkAction & WalkAction.Store) == WalkAction.Store)
                 {
                     if (node.IsModified)
                         node.Store();
                 }
 
-                if ((param.WalkAction & WalkAction.Unload) == WTree.WalkAction.Unload)
+                if ((param.WalkAction & WalkAction.Unload) == WalkAction.Unload)
                 {
                     //node.IsExpiredFromCache = false;
                     branch.Node = null;
@@ -177,11 +177,11 @@ namespace FenySoft.Qdb.WaterfallTree
                     newBranch.Node.Branch = newBranch;
                     newBranch.NodeState = newBranch.Node.State;
 
-                    NodeType = WTree.NodeType.Internal;
+                    NodeType = NodeType.Internal;
                     //NodeHandle = Tree.Repository.Reserve();
                     NodeHandle = Tree.heap.ObtainNewHandle();
-                    Node = WTree.Node.Create(this);
-                    NodeState = WTree.NodeState.None;
+                    Node = Node.Create(this);
+                    NodeState = NodeState.None;
 
                     Tree.Depth++;
 

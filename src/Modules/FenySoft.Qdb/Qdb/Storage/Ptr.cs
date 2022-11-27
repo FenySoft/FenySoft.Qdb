@@ -42,7 +42,7 @@ namespace FenySoft.Qdb.Storage
         public override bool Equals(object obj)
         {
             if (obj is Ptr)
-                return this.Equals((Ptr)obj);
+                return Equals((Ptr)obj);
 
             return false;
         }
@@ -77,7 +77,7 @@ namespace FenySoft.Qdb.Storage
         /// </summary>
         public bool IsNull
         {
-            get { return this.Equals(NULL); }
+            get { return Equals(NULL); }
         }
 
         /// <summary>

@@ -231,7 +231,7 @@ namespace FenySoft.Qdb.Remote
 
         private void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!disposed)
             {
                 if (disposing)
                 {
@@ -303,7 +303,7 @@ namespace FenySoft.Qdb.Remote
                 CommandCollection cmds = new CommandCollection(1);
                 cmds.Add(command);
 
-                var resultCommand = Engine.Execute(StorageEngineClient.StorageEngineDescriptor, cmds)[0];
+                var resultCommand = Engine.Execute(StorageEngineDescriptor, cmds)[0];
                 SetResult(command, resultCommand);
             }
 

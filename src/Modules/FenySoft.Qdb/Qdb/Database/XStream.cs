@@ -239,7 +239,7 @@ namespace FenySoft.Qdb.Database
                 if (value == length)
                     return;
 
-                var oldPosition = this.position;
+                var oldPosition = position;
                 try
                 {
                     if (value > length)

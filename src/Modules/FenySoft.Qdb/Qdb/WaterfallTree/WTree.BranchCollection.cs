@@ -34,12 +34,12 @@ namespace FenySoft.Qdb.WaterfallTree
 
             public int BinarySearch(FullKey locator, int index, int length, IComparer<KeyValuePair<FullKey, Branch>> comparer)
             {
-                return this.BinarySearch(index, length, new KeyValuePair<FullKey, Branch>(locator, null), comparer);
+                return BinarySearch(index, length, new KeyValuePair<FullKey, Branch>(locator, null), comparer);
             }
 
             public int BinarySearch(FullKey locator, int index, int length)
             {
-                return BinarySearch(locator, index, length, BranchCollection.Comparer);
+                return BinarySearch(locator, index, length, Comparer);
             }
 
             public int BinarySearch(FullKey locator)
