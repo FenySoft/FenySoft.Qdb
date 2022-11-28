@@ -1,8 +1,8 @@
-﻿using FenySoft.Core.Communication;
-using FenySoft.Core.IO;
+﻿using FenySoft.Core.IO;
 using FenySoft.Qdb.Remote;
 using FenySoft.Qdb.Storage;
 using FenySoft.Qdb.WaterfallTree;
+using FenySoft.Remote;
 
 namespace FenySoft.Qdb.Database
 {
@@ -41,7 +41,7 @@ namespace FenySoft.Qdb.Database
 
         public static StorageEngineServer CreateServer(ITStorageEngine engine, int port = 7182)
         {
-            TcpServer server = new TcpServer(port);
+            TTcpServer server = new TTcpServer(port);
             StorageEngineServer engineServer = new StorageEngineServer(engine, server);
 
             return engineServer;

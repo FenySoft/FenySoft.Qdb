@@ -28,7 +28,7 @@
 
             public override string ToString()
             {
-                return String.Format("NodeType = {0}, Handle = {1}, IsNodeLoaded = {2}, Cache.OperationCount = {3}", NodeType, NodeHandle, IsNodeLoaded, Cache.OperationCount);
+                return String.Format("NodeType = {0}, Handle = {1}, IsNodeLoaded = {2}, TCache.OperationCount = {3}", NodeType, NodeHandle, IsNodeLoaded, Cache.OperationCount);
             }
 
             #region Node

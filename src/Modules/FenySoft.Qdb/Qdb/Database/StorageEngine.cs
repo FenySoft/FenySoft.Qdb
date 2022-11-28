@@ -36,9 +36,9 @@ namespace FenySoft.Qdb.Database
             if (!map.TryGetValue(name, out item))
             {
                 if (keyType == null)
-                    keyType = DataTypeUtils.BuildType(keyDataType);
+                    keyType = TDataTypeUtils.BuildType(keyDataType);
                 if (recordType == null)
-                    recordType = DataTypeUtils.BuildType(recordDataType);
+                    recordType = TDataTypeUtils.BuildType(recordDataType);
 
                 var locator = CreateLocator(name, structureType, keyDataType, recordDataType, keyType, recordType);
                 XTablePortable table = new XTablePortable(this, locator);
@@ -59,7 +59,7 @@ namespace FenySoft.Qdb.Database
                     throw new ArgumentException("ARecordDataType");
 
                 if (locator.KeyType == null)
-                    locator.KeyType = DataTypeUtils.BuildType(keyDataType);
+                    locator.KeyType = TDataTypeUtils.BuildType(keyDataType);
                 else
                 {
                     if (keyType != null && keyType != locator.KeyType)
@@ -67,7 +67,7 @@ namespace FenySoft.Qdb.Database
                 }
 
                 if (locator.RecordType == null)
-                    locator.RecordType = DataTypeUtils.BuildType(recordDataType);
+                    locator.RecordType = TDataTypeUtils.BuildType(recordDataType);
                 else
                 {
                     if (recordType != null && recordType != locator.RecordType)
@@ -98,7 +98,7 @@ namespace FenySoft.Qdb.Database
             }
         }
 
-        public ITTable<TKey, TRecord> OpenXTablePortable<TKey, TRecord>(string AName, TDataType AKeyDataType, TDataType ARecordDataType, ITransformer<TKey, ITData> AKeyTransformer, ITransformer<TRecord, ITData> ARecordTransformer)
+        public ITTable<TKey, TRecord> OpenXTablePortable<TKey, TRecord>(string AName, TDataType AKeyDataType, TDataType ARecordDataType, ITTransformer<TKey, ITData> AKeyTransformer, ITTransformer<TRecord, ITData> ARecordTransformer)
         {
             lock (SyncRoot)
             {
@@ -113,8 +113,8 @@ namespace FenySoft.Qdb.Database
 
         public ITTable<TKey, TRecord> OpenXTablePortable<TKey, TRecord>(string AName)
         {
-            TDataType keyDataType = DataTypeUtils.BuildDataType(typeof(TKey));
-            TDataType recordDataType = DataTypeUtils.BuildDataType(typeof(TRecord));
+            TDataType keyDataType = TDataTypeUtils.BuildDataType(typeof(TKey));
+            TDataType recordDataType = TDataTypeUtils.BuildDataType(typeof(TRecord));
 
             return OpenXTablePortable<TKey, TRecord>(AName, keyDataType, recordDataType, null, null);
         }
@@ -126,8 +126,8 @@ namespace FenySoft.Qdb.Database
                 Type keyType = typeof(TKey);
                 Type recordType = typeof(TRecord);
 
-                TDataType keyDataType = DataTypeUtils.BuildDataType(keyType);
-                TDataType recordDataType = DataTypeUtils.BuildDataType(recordType);
+                TDataType keyDataType = TDataTypeUtils.BuildDataType(keyType);
+                TDataType recordDataType = TDataTypeUtils.BuildDataType(recordType);
 
                 var item = Obtain(AName, StructureType.XTABLE, keyDataType, recordDataType, keyType, recordType);
 

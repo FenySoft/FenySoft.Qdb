@@ -246,7 +246,7 @@ namespace FenySoft.Qdb.Database
                 WTree.FullKey nearFullKey;
                 bool hasNearFullKey;
                 WTree.FullKey lastVisitedFullKey = default(WTree.FullKey);
-                IOrderedSet<ITData, ITData> records;
+                ITOrderedSet<ITData, ITData> records;
 
                 records = Tree.FindData(Locator, Locator, hasFrom ? from : null, Direction.Forward, out nearFullKey, out hasNearFullKey, ref lastVisitedFullKey);
 
@@ -261,7 +261,7 @@ namespace FenySoft.Qdb.Database
                 while (records != null) // && records.Count > 0
                 {
                     Task task = null;
-                    IOrderedSet<ITData, ITData> recs = null;
+                    ITOrderedSet<ITData, ITData> recs = null;
 
                     if (hasNearFullKey && nearFullKey.Locator.Equals(Locator))
                     {
@@ -309,7 +309,7 @@ namespace FenySoft.Qdb.Database
 
                 WTree.FullKey nearFullKey;
                 bool hasNearFullKey;
-                IOrderedSet<ITData, ITData> records;
+                ITOrderedSet<ITData, ITData> records;
 
                 WTree.FullKey lastVisitedFullKey = new WTree.FullKey(Locator, to);
                 records = Tree.FindData(Locator, Locator, hasTo ? to : null, Direction.Backward, out nearFullKey, out hasNearFullKey, ref lastVisitedFullKey);
@@ -320,7 +320,7 @@ namespace FenySoft.Qdb.Database
                 while (records != null)
                 {
                     Task task = null;
-                    IOrderedSet<ITData, ITData> recs = null;
+                    ITOrderedSet<ITData, ITData> recs = null;
 
                     //if (records.Count > 0)
                     //    lastVisitedFullKey = new WTree.FullKey(Locator, records.First.Key);

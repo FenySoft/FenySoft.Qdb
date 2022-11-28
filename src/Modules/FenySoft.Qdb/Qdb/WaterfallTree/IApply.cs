@@ -10,7 +10,7 @@ namespace FenySoft.Qdb.WaterfallTree
         /// </summary>
         bool Internal(IOperationCollection operations);
 
-        bool Leaf(IOperationCollection operations, IOrderedSet<ITData, ITData> data);
+        bool Leaf(IOperationCollection operations, ITOrderedSet<ITData, ITData> data);
 
         Locator Locator { get; }
     }

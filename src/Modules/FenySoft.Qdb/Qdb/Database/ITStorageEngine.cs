@@ -13,7 +13,7 @@ namespace FenySoft.Qdb.Database
         /// <summary>
         /// Works with portable types via custom transformers.
         /// </summary>
-        ITTable<TKey, TRecord> OpenXTablePortable<TKey, TRecord>(string AName, TDataType AKeyDataType, TDataType ARecordDataType, ITransformer<TKey, ITData> AKeyTransformer, ITransformer<TRecord, ITData> ARecordTransformer);
+        ITTable<TKey, TRecord> OpenXTablePortable<TKey, TRecord>(string AName, TDataType AKeyDataType, TDataType ARecordDataType, ITTransformer<TKey, ITData> AKeyTransformer, ITTransformer<TRecord, ITData> ARecordTransformer);
 
         /// <summary>
         /// Works with anonymous types via default transformers.

@@ -38,7 +38,7 @@ namespace FenySoft.Qdb.Remote
 
             writer.Write(ID);
 
-            CommandPersist persist = ID > 0 ? new CommandPersist(new DataPersist(Description.KeyType, null, AllowNull.OnlyMembers), new DataPersist(Description.RecordType, null, AllowNull.OnlyMembers)) : new CommandPersist(null, null);
+            CommandPersist persist = ID > 0 ? new CommandPersist(new TDataPersist(Description.KeyType, null, AllowNull.OnlyMembers), new TDataPersist(Description.RecordType, null, AllowNull.OnlyMembers)) : new CommandPersist(null, null);
             CommandCollectionPersist commandsPersist = new CommandCollectionPersist(persist);
 
             commandsPersist.Write(writer, Commands);
@@ -56,7 +56,7 @@ namespace FenySoft.Qdb.Remote
                 try
                 {
                     description = PreviousRecord.Key == ID ? PreviousRecord.Value : find(ID);
-                    persist = new CommandPersist(new DataPersist(description.KeyType, null, AllowNull.OnlyMembers), new DataPersist(description.RecordType, null, AllowNull.OnlyMembers));
+                    persist = new CommandPersist(new TDataPersist(description.KeyType, null, AllowNull.OnlyMembers), new TDataPersist(description.RecordType, null, AllowNull.OnlyMembers));
                 }
                 catch (Exception exc)
                 {

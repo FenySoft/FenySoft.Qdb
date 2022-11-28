@@ -3,7 +3,7 @@ using FenySoft.Core.Collections;
 
 namespace FenySoft.Qdb.WaterfallTree
 {
-    public interface IDataContainer : IOrderedSet<ITData, ITData>
+    public interface IDataContainer : ITOrderedSet<ITData, ITData>
     {
         double FillPercentage { get; }
 

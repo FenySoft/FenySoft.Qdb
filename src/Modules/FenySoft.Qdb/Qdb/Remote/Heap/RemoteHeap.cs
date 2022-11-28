@@ -1,15 +1,15 @@
-﻿using FenySoft.Core.Communication;
-using FenySoft.Qdb.WaterfallTree;
+﻿using FenySoft.Qdb.WaterfallTree;
+using FenySoft.Remote;
 
 namespace FenySoft.Qdb.Remote.Heap
 {
     public class RemoteHeap : IHeap
     {
-        public ClientConnection Client { get; private set; }
+        public TClientConnection Client { get; private set; }
 
         public RemoteHeap(string host, int port)
         {
-            Client = new ClientConnection(host, port);
+            Client = new TClientConnection(host, port);
             Client.Start();
         }
 
@@ -21,7 +21,7 @@ namespace FenySoft.Qdb.Remote.Heap
             BinaryWriter writer = new BinaryWriter(ms);
             ObtainHandleCommand.WriteRequest(writer);
 
-            Packet packet = new Packet(ms);
+            TPacket packet = new TPacket(ms);
             Client.Send(packet);
             packet.Wait();
 
@@ -34,7 +34,7 @@ namespace FenySoft.Qdb.Remote.Heap
             BinaryWriter writer = new BinaryWriter(ms);
             ReleaseHandleCommand.WriteRequest(writer, handle);
 
-            Packet packet = new Packet(ms);
+            TPacket packet = new TPacket(ms);
             Client.Send(packet);
         }
 
@@ -44,7 +44,7 @@ namespace FenySoft.Qdb.Remote.Heap
             BinaryWriter writer = new BinaryWriter(ms);
             HandleExistCommand.WriteRequest(writer, handle);
 
-            Packet packet = new Packet(ms);
+            TPacket packet = new TPacket(ms);
             Client.Send(packet);
             packet.Wait();
 
@@ -57,7 +57,7 @@ namespace FenySoft.Qdb.Remote.Heap
             BinaryWriter writer = new BinaryWriter(ms);
             WriteCommand.WriteRequest(writer, handle, index, count, buffer);
 
-            Packet packet = new Packet(ms);
+            TPacket packet = new TPacket(ms);
             Client.Send(packet);
         }
 
@@ -67,7 +67,7 @@ namespace FenySoft.Qdb.Remote.Heap
             BinaryWriter writer = new BinaryWriter(ms);
             ReadCommand.WriteRequest(writer, handle);
 
-            Packet packet = new Packet(ms);
+            TPacket packet = new TPacket(ms);
             Client.Send(packet);
             packet.Wait();
 
@@ -80,7 +80,7 @@ namespace FenySoft.Qdb.Remote.Heap
             BinaryWriter writer = new BinaryWriter(ms);
             CommitCommand.WriteRequest(writer);
 
-            Packet packet = new Packet(ms);
+            TPacket packet = new TPacket(ms);
             Client.Send(packet);
         }
 
@@ -90,7 +90,7 @@ namespace FenySoft.Qdb.Remote.Heap
             BinaryWriter writer = new BinaryWriter(ms);
             CloseCommand.WriteRequest(writer);
 
-            Packet packet = new Packet(ms);
+            TPacket packet = new TPacket(ms);
             Client.Send(packet);
         }
 
@@ -102,7 +102,7 @@ namespace FenySoft.Qdb.Remote.Heap
                 BinaryWriter writer = new BinaryWriter(ms);
                 GetTagCommand.WriteRequest(writer);
 
-                Packet packet = new Packet(ms);
+                TPacket packet = new TPacket(ms);
                 Client.Send(packet);
                 packet.Wait();
 
@@ -114,7 +114,7 @@ namespace FenySoft.Qdb.Remote.Heap
                 BinaryWriter writer = new BinaryWriter(ms);
                 SetTagCommand.WriteRequest(writer, value);
 
-                Packet packet = new Packet(ms);
+                TPacket packet = new TPacket(ms);
                 Client.Send(packet);
             }
         }
@@ -127,7 +127,7 @@ namespace FenySoft.Qdb.Remote.Heap
                 BinaryWriter writer = new BinaryWriter(ms);
                 DataBaseSizeCommand.WriteRequest(writer);
 
-                Packet packet = new Packet(ms);
+                TPacket packet = new TPacket(ms);
                 Client.Send(packet);
                 packet.Wait();
 
@@ -143,7 +143,7 @@ namespace FenySoft.Qdb.Remote.Heap
                 BinaryWriter writer = new BinaryWriter(ms);
                 SizeCommand.WriteRequest(writer);
 
-                Packet packet = new Packet(ms);
+                TPacket packet = new TPacket(ms);
                 Client.Send(packet);
                 packet.Wait();
 

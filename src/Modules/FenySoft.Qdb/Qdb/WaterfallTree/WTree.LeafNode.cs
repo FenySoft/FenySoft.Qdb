@@ -17,14 +17,14 @@ namespace FenySoft.Qdb.WaterfallTree
             /// </summary>
             public int RecordCount { get; private set; }
 
-            public readonly Dictionary<Locator, IOrderedSet<ITData, ITData>> Container;
+            public readonly Dictionary<Locator, ITOrderedSet<ITData, ITData>> Container;
 
             public LeafNode(Branch branch, bool isModified)
                 : base(branch)
             {
                 Debug.Assert(branch.NodeType == NodeType.Leaf);
 
-                Container = new Dictionary<Locator, IOrderedSet<ITData, ITData>>();
+                Container = new Dictionary<Locator, ITOrderedSet<ITData, ITData>>();
                 IsModified = isModified;
             }
 
@@ -32,7 +32,7 @@ namespace FenySoft.Qdb.WaterfallTree
             {
                 Locator locator = operations.Locator;
 
-                IOrderedSet<ITData, ITData> data;
+                ITOrderedSet<ITData, ITData> data;
                 if (Container.TryGetValue(locator, out data))
                 {
                     RecordCount -= data.Count;
@@ -69,7 +69,7 @@ namespace FenySoft.Qdb.WaterfallTree
 
                 int leftRecordCount = 0;
 
-                KeyValuePair<Locator, IOrderedSet<ITData, ITData>> specialCase = new KeyValuePair<Locator, IOrderedSet<ITData, ITData>>(default(Locator), null);
+                KeyValuePair<Locator, ITOrderedSet<ITData, ITData>> specialCase = new KeyValuePair<Locator, ITOrderedSet<ITData, ITData>>(default(Locator), null);
 
                 if (Container.Count == 1)
                 {
@@ -105,7 +105,7 @@ namespace FenySoft.Qdb.WaterfallTree
                             var data = kv.Value.Split(leftRecordCount - HALF_RECORD_COUNT);
                             if (data.Count > 0)
                             {
-                                specialCase = new KeyValuePair<Locator, IOrderedSet<ITData, ITData>>(kv.Key, data);
+                                specialCase = new KeyValuePair<Locator, ITOrderedSet<ITData, ITData>>(kv.Key, data);
                                 leftRecordCount -= data.Count;
                             }
                         }
@@ -148,7 +148,7 @@ namespace FenySoft.Qdb.WaterfallTree
             {
                 foreach (var kv in ((LeafNode)node).Container)
                 {
-                    IOrderedSet<ITData, ITData> data;
+                    ITOrderedSet<ITData, ITData> data;
                     if (!Container.TryGetValue(kv.Key, out data))
                         Container[kv.Key] = data = kv.Value;
                     else
@@ -223,7 +223,7 @@ namespace FenySoft.Qdb.WaterfallTree
                 for (int i = 0; i < count; i++)
                 {
                     Locator path = Branch.Tree.DeserializeLocator(reader);
-                    IOrderedSet<ITData, ITData> data = path.OrderedSetPersist.Read(reader);
+                    ITOrderedSet<ITData, ITData> data = path.OrderedSetPersist.Read(reader);
                     Container[path] = data;
 
                     RecordCount += data.Count;
@@ -232,9 +232,9 @@ namespace FenySoft.Qdb.WaterfallTree
                 IsModified = false;
             }
 
-            public IOrderedSet<ITData, ITData> FindData(Locator locator, Direction direction, ref FullKey nearFullKey, ref bool hasNearFullKey)
+            public ITOrderedSet<ITData, ITData> FindData(Locator locator, Direction direction, ref FullKey nearFullKey, ref bool hasNearFullKey)
             {
-                IOrderedSet<ITData, ITData> data = null;
+                ITOrderedSet<ITData, ITData> data = null;
                 Container.TryGetValue(locator, out data);
                 if (direction == Direction.None)
                     return data;
@@ -242,7 +242,7 @@ namespace FenySoft.Qdb.WaterfallTree
                 if (Container.Count == 1 && data != null)
                     return data;
 
-                IOrderedSet<ITData, ITData> nearData = null;
+                ITOrderedSet<ITData, ITData> nearData = null;
                 if (direction == Direction.Backward)
                 {
                     bool havePrev = false;

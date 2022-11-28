@@ -63,7 +63,7 @@ namespace FenySoft.Qdb.WaterfallTree
 
                 ////load branch cache
                 //using (MemoryStream ms = new MemoryStream(Heap.Read(HANDLE_ROOT)))
-                //    RootBranch.Cache.Load(this, new BinaryReader(ms));
+                //    RootBranch.TCache.Load(this, new BinaryReader(ms));
                 isRootCacheLoaded = false;
             }
             else
@@ -155,7 +155,7 @@ namespace FenySoft.Qdb.WaterfallTree
         /// <summary>
         /// The hook.
         /// </summary>
-        public IOrderedSet<ITData, ITData> FindData(Locator originalLocator, Locator locator, ITData key, Direction direction, out FullKey nearFullKey, out bool hasNearFullKey, ref FullKey lastVisitedFullKey)
+        public ITOrderedSet<ITData, ITData> FindData(Locator originalLocator, Locator locator, ITData key, Direction direction, out FullKey nearFullKey, out bool hasNearFullKey, ref FullKey lastVisitedFullKey)
         {
             if (disposed)
                 throw new ObjectDisposedException("WTree");
@@ -269,7 +269,7 @@ namespace FenySoft.Qdb.WaterfallTree
                     throw new NotSupportedException(direction.ToString());
             }
 
-            IOrderedSet<ITData, ITData> data = ((LeafNode)branch.Node).FindData(originalLocator, direction, ref nearFullKey, ref hasNearFullKey);
+            ITOrderedSet<ITData, ITData> data = ((LeafNode)branch.Node).FindData(originalLocator, direction, ref nearFullKey, ref hasNearFullKey);
 
             Monitor.Exit(branch);
 
@@ -389,7 +389,7 @@ namespace FenySoft.Qdb.WaterfallTree
 
         #endregion
 
-        #region Cache
+        #region TCache
 
         /// <summary>
         /// Branch.NodeID -> node
@@ -407,7 +407,7 @@ namespace FenySoft.Qdb.WaterfallTree
             set
             {
                 if (value <= 0)
-                    throw new ArgumentException("Cache size is invalid.");
+                    throw new ArgumentException("TCache size is invalid.");
 
                 cacheSize = value;
 
@@ -462,7 +462,7 @@ namespace FenySoft.Qdb.WaterfallTree
 
                     foreach (var kv in kvs.Where(x => !x.Value.IsRoot).OrderBy(x => x.Value.TouchID).Take(Cache.Count - CacheSize))
                         kv.Value.IsExpiredFromCache = true;
-                    //Debug.WriteLine(Cache.Count);
+                    //Debug.WriteLine(TCache.Count);
                     Token token;
                     lock (RootBranch)
                     {

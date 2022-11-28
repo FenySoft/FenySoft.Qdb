@@ -23,15 +23,15 @@ namespace FenySoft.Qdb.Database
         {
             get
             {
-                ITData ikey = new Data<TKey>(key);
+                ITData ikey = new TData<TKey>(key);
                 ITData irec = Table[ikey];
 
-                return ((Data<TRecord>)irec).Value;
+                return ((TData<TRecord>)irec).Value;
             }
             set
             {
-                ITData ikey = new Data<TKey>(key);
-                ITData irec = new Data<TRecord>(value);
+                ITData ikey = new TData<TKey>(key);
+                ITData irec = new TData<TRecord>(value);
 
                 Table[ikey] = irec;
             }
@@ -39,31 +39,31 @@ namespace FenySoft.Qdb.Database
 
         public void Replace(TKey key, TRecord record)
         {
-            ITData ikey = new Data<TKey>(key);
-            ITData irec = new Data<TRecord>(record);
+            ITData ikey = new TData<TKey>(key);
+            ITData irec = new TData<TRecord>(record);
 
             Table.Replace(ikey, irec);
         }
 
         public void InsertOrIgnore(TKey key, TRecord record)
         {
-            ITData ikey = new Data<TKey>(key);
-            ITData irec = new Data<TRecord>(record);
+            ITData ikey = new TData<TKey>(key);
+            ITData irec = new TData<TRecord>(record);
 
             Table.InsertOrIgnore(ikey, irec);
         }
 
         public void Delete(TKey key)
         {
-            ITData ikey = new Data<TKey>(key);
+            ITData ikey = new TData<TKey>(key);
 
             Table.Delete(ikey);
         }
 
         public void Delete(TKey fromKey, TKey toKey)
         {
-            ITData ifrom = new Data<TKey>(fromKey);
-            ITData ito = new Data<TKey>(toKey);
+            ITData ifrom = new TData<TKey>(fromKey);
+            ITData ito = new TData<TKey>(toKey);
 
             Table.Delete(ifrom, ito);
         }
@@ -75,14 +75,14 @@ namespace FenySoft.Qdb.Database
 
         public bool Exists(TKey key)
         {
-            ITData ikey = new Data<TKey>(key);
+            ITData ikey = new TData<TKey>(key);
 
             return Table.Exists(ikey);
         }
 
         public bool TryGet(TKey key, out TRecord record)
         {
-            ITData ikey = new Data<TKey>(key);
+            ITData ikey = new TData<TKey>(key);
 
             ITData irec;
             if (!Table.TryGet(ikey, out irec))
@@ -91,87 +91,87 @@ namespace FenySoft.Qdb.Database
                 return false;
             }
 
-            record = ((Data<TRecord>)irec).Value;
+            record = ((TData<TRecord>)irec).Value;
 
             return true;
         }
 
         public TRecord Find(TKey key)
         {
-            ITData ikey = new Data<TKey>(key);
+            ITData ikey = new TData<TKey>(key);
 
             ITData irec = Table.Find(ikey);
             if (irec == null)
                 return default(TRecord);
 
-            TRecord record = ((Data<TRecord>)irec).Value;
+            TRecord record = ((TData<TRecord>)irec).Value;
 
             return record;
         }
 
         public TRecord TryGetOrDefault(TKey key, TRecord defaultRecord)
         {
-            ITData ikey = new Data<TKey>(key);
-            ITData idefaultRec = new Data<TRecord>(defaultRecord);
+            ITData ikey = new TData<TKey>(key);
+            ITData idefaultRec = new TData<TRecord>(defaultRecord);
             ITData irec = Table.TryGetOrDefault(ikey, idefaultRec);
 
-            TRecord record = ((Data<TRecord>)irec).Value;
+            TRecord record = ((TData<TRecord>)irec).Value;
 
             return record;
         }
 
         public KeyValuePair<TKey, TRecord>? FindNext(TKey key)
         {
-            ITData ikey = new Data<TKey>(key);
+            ITData ikey = new TData<TKey>(key);
 
             KeyValuePair<ITData, ITData>? kv = Table.FindNext(ikey);
             if (!kv.HasValue)
                 return null;
 
-            TKey k = ((Data<TKey>)kv.Value.Key).Value;
-            TRecord r = ((Data<TRecord>)kv.Value.Value).Value;
+            TKey k = ((TData<TKey>)kv.Value.Key).Value;
+            TRecord r = ((TData<TRecord>)kv.Value.Value).Value;
 
             return new KeyValuePair<TKey, TRecord>(k, r);
         }
 
         public KeyValuePair<TKey, TRecord>? FindAfter(TKey key)
         {
-            ITData ikey = new Data<TKey>(key);
+            ITData ikey = new TData<TKey>(key);
 
             KeyValuePair<ITData, ITData>? kv = Table.FindAfter(ikey);
             if (!kv.HasValue)
                 return null;
 
-            TKey k = ((Data<TKey>)kv.Value.Key).Value;
-            TRecord r = ((Data<TRecord>)kv.Value.Value).Value;
+            TKey k = ((TData<TKey>)kv.Value.Key).Value;
+            TRecord r = ((TData<TRecord>)kv.Value.Value).Value;
 
             return new KeyValuePair<TKey, TRecord>(k, r);
         }
 
         public KeyValuePair<TKey, TRecord>? FindPrev(TKey key)
         {
-            ITData ikey = new Data<TKey>(key);
+            ITData ikey = new TData<TKey>(key);
 
             KeyValuePair<ITData, ITData>? kv = Table.FindPrev(ikey);
             if (!kv.HasValue)
                 return null;
 
-            TKey k = ((Data<TKey>)kv.Value.Key).Value;
-            TRecord r = ((Data<TRecord>)kv.Value.Value).Value;
+            TKey k = ((TData<TKey>)kv.Value.Key).Value;
+            TRecord r = ((TData<TRecord>)kv.Value.Value).Value;
 
             return new KeyValuePair<TKey, TRecord>(k, r);
         }
 
         public KeyValuePair<TKey, TRecord>? FindBefore(TKey key)
         {
-            ITData ikey = new Data<TKey>(key);
+            ITData ikey = new TData<TKey>(key);
 
             KeyValuePair<ITData, ITData>? kv = Table.FindBefore(ikey);
             if (!kv.HasValue)
                 return null;
 
-            TKey k = ((Data<TKey>)kv.Value.Key).Value;
-            TRecord r = ((Data<TRecord>)kv.Value.Value).Value;
+            TKey k = ((TData<TKey>)kv.Value.Key).Value;
+            TRecord r = ((TData<TRecord>)kv.Value.Value).Value;
 
             return new KeyValuePair<TKey, TRecord>(k, r);
         }
@@ -180,8 +180,8 @@ namespace FenySoft.Qdb.Database
         {
             foreach (var kv in Table.Forward())
             {
-                TKey key = ((Data<TKey>)kv.Key).Value;
-                TRecord rec = ((Data<TRecord>)kv.Value).Value;
+                TKey key = ((TData<TKey>)kv.Key).Value;
+                TRecord rec = ((TData<TRecord>)kv.Value).Value;
 
                 yield return new KeyValuePair<TKey, TRecord>(key, rec);
             }
@@ -189,13 +189,13 @@ namespace FenySoft.Qdb.Database
 
         public IEnumerable<KeyValuePair<TKey, TRecord>> Forward(TKey from, bool hasFrom, TKey to, bool hasTo)
         {
-            ITData ifrom = hasFrom ? new Data<TKey>(from) : null;
-            ITData ito = hasTo ? new Data<TKey>(to) : null;
+            ITData ifrom = hasFrom ? new TData<TKey>(from) : null;
+            ITData ito = hasTo ? new TData<TKey>(to) : null;
 
             foreach (var kv in Table.Forward(ifrom, hasFrom, ito, hasTo))
             {
-                TKey key = ((Data<TKey>)kv.Key).Value;
-                TRecord rec = ((Data<TRecord>)kv.Value).Value;
+                TKey key = ((TData<TKey>)kv.Key).Value;
+                TRecord rec = ((TData<TRecord>)kv.Value).Value;
 
                 yield return new KeyValuePair<TKey, TRecord>(key, rec);
             }
@@ -205,8 +205,8 @@ namespace FenySoft.Qdb.Database
         {
             foreach (var kv in Table.Backward())
             {
-                TKey key = ((Data<TKey>)kv.Key).Value;
-                TRecord rec = ((Data<TRecord>)kv.Value).Value;
+                TKey key = ((TData<TKey>)kv.Key).Value;
+                TRecord rec = ((TData<TRecord>)kv.Value).Value;
 
                 yield return new KeyValuePair<TKey, TRecord>(key, rec);
             }
@@ -214,13 +214,13 @@ namespace FenySoft.Qdb.Database
 
         public IEnumerable<KeyValuePair<TKey, TRecord>> Backward(TKey to, bool hasTo, TKey from, bool hasFrom)
         {
-            ITData ito = hasTo ? new Data<TKey>(to) : null;
-            ITData ifrom = hasFrom ? new Data<TKey>(from) : null;
+            ITData ito = hasTo ? new TData<TKey>(to) : null;
+            ITData ifrom = hasFrom ? new TData<TKey>(from) : null;
 
             foreach (var kv in Table.Backward(ito, hasTo, ifrom, hasFrom))
             {
-                TKey key = ((Data<TKey>)kv.Key).Value;
-                TRecord rec = ((Data<TRecord>)kv.Value).Value;
+                TKey key = ((TData<TKey>)kv.Key).Value;
+                TRecord rec = ((TData<TRecord>)kv.Value).Value;
 
                 yield return new KeyValuePair<TKey, TRecord>(key, rec);
             }
@@ -232,8 +232,8 @@ namespace FenySoft.Qdb.Database
             {
                 KeyValuePair<ITData, ITData> kv = Table.FirstRow;
 
-                TKey key = ((Data<TKey>)kv.Key).Value;
-                TRecord rec = ((Data<TRecord>)kv.Value).Value;
+                TKey key = ((TData<TKey>)kv.Key).Value;
+                TRecord rec = ((TData<TRecord>)kv.Value).Value;
 
                 return new KeyValuePair<TKey, TRecord>(key, rec);
             }
@@ -245,8 +245,8 @@ namespace FenySoft.Qdb.Database
             {
                 KeyValuePair<ITData, ITData> kv = Table.LastRow;
 
-                TKey key = ((Data<TKey>)kv.Key).Value;
-                TRecord rec = ((Data<TRecord>)kv.Value).Value;
+                TKey key = ((TData<TKey>)kv.Key).Value;
+                TRecord rec = ((TData<TRecord>)kv.Value).Value;
 
                 return new KeyValuePair<TKey, TRecord>(key, rec);
             }

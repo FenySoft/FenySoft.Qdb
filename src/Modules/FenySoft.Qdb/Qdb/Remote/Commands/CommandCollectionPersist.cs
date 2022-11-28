@@ -5,9 +5,9 @@ namespace FenySoft.Qdb.Remote.Commands
 {
     public class CommandCollectionPersist : ICommandCollectionPersist
     {
-        public IPersist<ICommand> Persist { get; private set; }
+        public ITPersist<ICommand> Persist { get; private set; }
 
-        public CommandCollectionPersist(IPersist<ICommand> persist)
+        public CommandCollectionPersist(ITPersist<ICommand> persist)
         {
             Persist = persist;
         }
@@ -82,15 +82,15 @@ namespace FenySoft.Qdb.Remote.Commands
         }
     }
 
-    public partial class CommandPersist : IPersist<ICommand>
+    public partial class CommandPersist : ITPersist<ICommand>
     {
         private Action<BinaryWriter, ICommand>[] writes;
         private Func<BinaryReader, ICommand>[] reads;
 
-        public IPersist<ITData> KeyPersist { get; private set; }
-        public IPersist<ITData> RecordPersist { get; private set; }
+        public ITPersist<ITData> KeyPersist { get; private set; }
+        public ITPersist<ITData> RecordPersist { get; private set; }
 
-        public CommandPersist(IPersist<ITData> keyPersist, IPersist<ITData> recordPersist)
+        public CommandPersist(ITPersist<ITData> keyPersist, ITPersist<ITData> recordPersist)
         {
             KeyPersist = keyPersist;
             RecordPersist = recordPersist;

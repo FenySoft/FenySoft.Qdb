@@ -1,5 +1,4 @@
 ﻿using FenySoft.Core.Data;
-using FenySoft.Core.Communication;
 using FenySoft.Qdb.Remote.Commands;
 using FenySoft.Qdb.WaterfallTree;
 
@@ -7,6 +6,7 @@ using System.Collections;
 using System.Collections.Concurrent;
 
 using FenySoft.Qdb.Database;
+using FenySoft.Remote;
 
 namespace FenySoft.Qdb.Remote
 {
@@ -16,11 +16,11 @@ namespace FenySoft.Qdb.Remote
         private ConcurrentDictionary<string, XTableRemote> indexes = new ConcurrentDictionary<string, XTableRemote>();
 
         public static readonly Descriptor StorageEngineDescriptor = new Descriptor(-1, "", TDataType.Boolean, TDataType.Boolean);
-        public readonly ClientConnection ClientConnection;
+        public readonly TClientConnection ClientConnection;
 
         public StorageEngineClient(string machineName = "localhost", int port = 7182)
         {
-            ClientConnection = new ClientConnection(machineName, port);
+            ClientConnection = new TClientConnection(machineName, port);
             ClientConnection.Start();
 
             Heap = new RemoteHeap(this);
@@ -28,7 +28,7 @@ namespace FenySoft.Qdb.Remote
 
         #region ITStorageEngine
 
-        public ITTable<TKey, TRecord> OpenXTablePortable<TKey, TRecord>(string AName, TDataType AKeyDataType, TDataType ARecordDataType, ITransformer<TKey, ITData> AKeyTransformer, ITransformer<TRecord, ITData> ARecordTransformer)
+        public ITTable<TKey, TRecord> OpenXTablePortable<TKey, TRecord>(string AName, TDataType AKeyDataType, TDataType ARecordDataType, ITTransformer<TKey, ITData> AKeyTransformer, ITTransformer<TRecord, ITData> ARecordTransformer)
         {
             var index = OpenXTablePortable(AName, AKeyDataType, ARecordDataType);
 
@@ -50,11 +50,11 @@ namespace FenySoft.Qdb.Remote
 
         public ITTable<TKey, TRecord> OpenXTablePortable<TKey, TRecord>(string AName)
         {
-            var keyDataType = DataTypeUtils.BuildDataType(typeof(TKey));
-            var recordDataType = DataTypeUtils.BuildDataType(typeof(TRecord));
+            var keyDataType = TDataTypeUtils.BuildDataType(typeof(TKey));
+            var recordDataType = TDataTypeUtils.BuildDataType(typeof(TRecord));
 
-            var keyTransformer = new DataTransformer<TKey>(typeof(TKey));
-            var recordTransformer = new DataTransformer<TRecord>(typeof(TRecord));
+            var keyTransformer = new TDataTransformer<TKey>(typeof(TKey));
+            var recordTransformer = new TDataTransformer<TRecord>(typeof(TRecord));
 
             return OpenXTablePortable<TKey, TRecord>(AName, keyDataType, recordDataType, null, null);
         }
@@ -150,7 +150,7 @@ namespace FenySoft.Qdb.Remote
             Message message = new Message(descriptor, commands);
             message.Serialize(writer);
 
-            Packet packet = new Packet(ms);
+            TPacket packet = new TPacket(ms);
             ClientConnection.Send(packet);
 
             packet.Wait();

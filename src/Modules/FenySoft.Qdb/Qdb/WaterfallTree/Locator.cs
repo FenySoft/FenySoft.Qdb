@@ -29,10 +29,10 @@ namespace FenySoft.Qdb.WaterfallTree
 
         private IComparer<ITData> keyComparer;
         private IEqualityComparer<ITData> keyEqualityComparer;
-        private IPersist<ITData> keyPersist;
-        private IPersist<ITData> recordPersist;
-        private IIndexerPersist<ITData> keyIndexerPersist;
-        private IIndexerPersist<ITData> recordIndexerPersist;
+        private ITPersist<ITData> keyPersist;
+        private ITPersist<ITData> recordPersist;
+        private ITIndexerPersist<ITData> keyIndexerPersist;
+        private ITIndexerPersist<ITData> recordIndexerPersist;
 
         private DateTime createTime;
         private DateTime modifiedTime;
@@ -51,7 +51,7 @@ namespace FenySoft.Qdb.WaterfallTree
         }
 
         public IOperationCollectionFactory OperationCollectionFactory;
-        public IOrderedSetFactory OrderedSetFactory;
+        public ITOrderedSetFactory OrderedSetFactory;
 
         public Locator(long id, string name, int structureType, TDataType keyDataType, TDataType recordDataType, Type keyType, Type recordType)
         {
@@ -144,12 +144,12 @@ namespace FenySoft.Qdb.WaterfallTree
                 RecordDataType.Serialize(writer);
 
                 //types
-                if (!DataTypeUtils.IsAnonymousType(KeyType))
+                if (!TDataTypeUtils.IsAnonymousType(KeyType))
                     writer.Write(KeyType.FullName);
                 else
                     writer.Write("");
 
-                if (!DataTypeUtils.IsAnonymousType(RecordType))
+                if (!TDataTypeUtils.IsAnonymousType(RecordType))
                     writer.Write(RecordType.FullName);
                 else
                     writer.Write("");
@@ -212,10 +212,10 @@ namespace FenySoft.Qdb.WaterfallTree
 
             //types
             string sKeyType = reader.ReadString();
-            Type keyType = (sKeyType != "") ? TypeCache.GetType(sKeyType) : DataTypeUtils.BuildType(keyDataType);
+            Type keyType = (sKeyType != "") ? TypeCache.GetType(sKeyType) : TDataTypeUtils.BuildType(keyDataType);
 
             string sRecordType = reader.ReadString();
-            Type recordType = (sRecordType != "") ? TypeCache.GetType(sRecordType) : DataTypeUtils.BuildType(recordDataType);
+            Type recordType = (sRecordType != "") ? TypeCache.GetType(sRecordType) : TDataTypeUtils.BuildType(recordDataType);
 
             //key & record members
             var keyMembers = ReadMembers(reader);
@@ -304,8 +304,8 @@ namespace FenySoft.Qdb.WaterfallTree
         }
 
         public IApply Apply { get; private set; }
-        public IPersist<IOrderedSet<ITData, ITData>> OrderedSetPersist { get; private set; }
-        public IPersist<IOperationCollection> OperationsPersist { get; private set; }
+        public ITPersist<ITOrderedSet<ITData, ITData>> OrderedSetPersist { get; private set; }
+        public ITPersist<IOperationCollection> OperationsPersist { get; private set; }
 
         public int CompareTo(Locator other)
         {
@@ -410,7 +410,7 @@ namespace FenySoft.Qdb.WaterfallTree
                 if (keyType == value)
                     return;
 
-                if (value != null && DataTypeUtils.BuildDataType(value) != KeyDataType)
+                if (value != null && TDataTypeUtils.BuildDataType(value) != KeyDataType)
                     throw new Exception(String.Format("The type {0} is not compatible with anonymous type {1}.", value, KeyDataType));
                 
                 keyType = value;
@@ -436,7 +436,7 @@ namespace FenySoft.Qdb.WaterfallTree
                 if (recordType == value)
                     return;
 
-                if (value != null && DataTypeUtils.BuildDataType(value) != RecordDataType)
+                if (value != null && TDataTypeUtils.BuildDataType(value) != RecordDataType)
                     throw new Exception(String.Format("The type {0} is not compatible with anonymous type {1}.", value, RecordDataType));
 
                 recordType = value;
@@ -486,7 +486,7 @@ namespace FenySoft.Qdb.WaterfallTree
             }
         }
 
-        public IPersist<ITData> KeyPersist
+        public ITPersist<ITData> KeyPersist
         {
             get
             {
@@ -507,7 +507,7 @@ namespace FenySoft.Qdb.WaterfallTree
             }
         }
 
-        public IPersist<ITData> RecordPersist
+        public ITPersist<ITData> RecordPersist
         {
             get
             { 
@@ -528,7 +528,7 @@ namespace FenySoft.Qdb.WaterfallTree
             }
         }
 
-        public IIndexerPersist<ITData> KeyIndexerPersist
+        public ITIndexerPersist<ITData> KeyIndexerPersist
         {
             get
             { 
@@ -547,7 +547,7 @@ namespace FenySoft.Qdb.WaterfallTree
             }
         }
 
-        public IIndexerPersist<ITData> RecordIndexerPersist
+        public ITIndexerPersist<ITData> RecordIndexerPersist
         {
             get
             {

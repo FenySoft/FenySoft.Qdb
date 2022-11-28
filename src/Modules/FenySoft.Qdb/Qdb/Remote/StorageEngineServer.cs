@@ -1,8 +1,8 @@
 ﻿using FenySoft.Core.Data;
 using FenySoft.Qdb.WaterfallTree;
-using FenySoft.Core.Communication;
 using FenySoft.Qdb.Database;
 using FenySoft.Qdb.Remote.Commands;
+using FenySoft.Remote;
 
 namespace FenySoft.Qdb.Remote
 {
@@ -16,9 +16,9 @@ namespace FenySoft.Qdb.Remote
         private Func<ICommand, ICommand>[] CommandsHeapExecute;
 
         public readonly ITStorageEngine StorageEngine;
-        public readonly TcpServer TcpServer;
+        public readonly TTcpServer TcpServer;
 
-        public StorageEngineServer(ITStorageEngine storageEngine, TcpServer tcpServer)
+        public StorageEngineServer(ITStorageEngine storageEngine, TTcpServer tcpServer)
         {
             if (storageEngine == null)
                 throw new ArgumentNullException("storageEngine");
@@ -113,7 +113,7 @@ namespace FenySoft.Qdb.Remote
                 {
                     try
                     {
-                        KeyValuePair<ServerConnection, Packet> order = TcpServer.RecievedPackets.Take(ShutdownTokenSource.Token);
+                        KeyValuePair<TServerConnection, TPacket> order = TcpServer.RecievedPacketsTake(ShutdownTokenSource.Token);
                         Task.Factory.StartNew(PacketExecute, order);
                     }
                     catch (OperationCanceledException)
@@ -142,7 +142,7 @@ namespace FenySoft.Qdb.Remote
         {
             try
             {
-                KeyValuePair<ServerConnection, Packet> order = (KeyValuePair<ServerConnection, Packet>)state;
+                KeyValuePair<TServerConnection, TPacket> order = (KeyValuePair<TServerConnection, TPacket>)state;
 
                 BinaryReader reader = new BinaryReader(order.Value.Request);
                 Message msgRequest = Message.Deserialize(reader, (id) => StorageEngine.Find(id));
@@ -196,7 +196,7 @@ namespace FenySoft.Qdb.Remote
 
                 ms.Position = 0;
                 order.Value.Response = ms;
-                order.Key.PendingPackets.Add(order.Value);
+                order.Key.FPendingPackets.Add(order.Value);
             }
             catch (Exception exc)
             {

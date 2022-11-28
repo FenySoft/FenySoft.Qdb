@@ -8,10 +8,10 @@ namespace FenySoft.Qdb.Database
     public class XTablePortable<TKey, TRecord> : ITTable<TKey, TRecord>
     {
         public ITTable<ITData, ITData> Table { get; private set; }
-        public ITransformer<TKey, ITData> KeyTransformer { get; private set; }
-        public ITransformer<TRecord, ITData> RecordTransformer { get; private set; }
+        public ITTransformer<TKey, ITData> KeyTransformer { get; private set; }
+        public ITTransformer<TRecord, ITData> RecordTransformer { get; private set; }
 
-        public XTablePortable(ITTable<ITData, ITData> table, ITransformer<TKey, ITData> keyTransformer = null, ITransformer<TRecord, ITData> recordTransformer = null)
+        public XTablePortable(ITTable<ITData, ITData> table, ITTransformer<TKey, ITData> keyTransformer = null, ITTransformer<TRecord, ITData> recordTransformer = null)
         {
             if (table == null)
                 throw new ArgumentNullException("table");
@@ -19,10 +19,10 @@ namespace FenySoft.Qdb.Database
             Table = table;
 
             if (keyTransformer == null)
-                keyTransformer = new DataTransformer<TKey>(table.Descriptor.KeyType);
+                keyTransformer = new TDataTransformer<TKey>(table.Descriptor.KeyType);
 
             if (recordTransformer == null)
-                recordTransformer = new DataTransformer<TRecord>(table.Descriptor.RecordType);
+                recordTransformer = new TDataTransformer<TRecord>(table.Descriptor.RecordType);
 
             KeyTransformer = keyTransformer;
             RecordTransformer = recordTransformer;

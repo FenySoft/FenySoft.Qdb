@@ -19,14 +19,13 @@
       <Compile Remove="Qdb\Database\Operations\ResultOperation.cs" />
       <Compile Remove="Qdb\Properties\AssemblyInfo.cs" />
     </ItemGroup>
-
+    
     <ItemGroup>
       <Folder Include="Qdb" />
     </ItemGroup>
-
+    
     <ItemGroup>
       <ProjectReference Include="..\..\..\..\FenySoft.Core\src\Modules\FenySoft.Core\FenySoft.Core.csproj" />
-      <ProjectReference Include="..\..\..\FenySoft.Core\src\FenySoft.Core\FenySoft.Core.csproj" />
+      <ProjectReference Include="..\..\..\..\FenySoft.Remote\src\Modules\FenySoft.Remote\FenySoft.Remote.csproj" />
     </ItemGroup>
-
 </Project>

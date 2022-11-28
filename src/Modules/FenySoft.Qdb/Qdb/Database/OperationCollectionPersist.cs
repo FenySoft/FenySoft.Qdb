@@ -5,18 +5,18 @@ using FenySoft.Qdb.WaterfallTree;
 
 namespace FenySoft.Qdb.Database
 {
-    public class OperationCollectionPersist : IPersist<IOperationCollection>
+    public class OperationCollectionPersist : ITPersist<IOperationCollection>
     {
         public const byte VERSION = 40;
 
         private readonly Action<BinaryWriter, IOperation>[] writes;
         private readonly Func<BinaryReader, IOperation>[] reads;
 
-        public readonly IPersist<ITData> KeyPersist;
-        public readonly IPersist<ITData> RecordPersist;
+        public readonly ITPersist<ITData> KeyPersist;
+        public readonly ITPersist<ITData> RecordPersist;
         public readonly IOperationCollectionFactory CollectionFactory;
 
-        public OperationCollectionPersist(IPersist<ITData> keyPersist, IPersist<ITData> recordPersist, IOperationCollectionFactory collectionFactory)
+        public OperationCollectionPersist(ITPersist<ITData> keyPersist, ITPersist<ITData> recordPersist, IOperationCollectionFactory collectionFactory)
         {
             KeyPersist = keyPersist;
             RecordPersist = recordPersist;

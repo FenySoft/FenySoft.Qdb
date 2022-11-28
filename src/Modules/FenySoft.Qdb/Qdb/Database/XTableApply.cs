@@ -21,7 +21,7 @@ namespace FenySoft.Qdb.Database
             return false;
         }
 
-        private bool SequentialApply(IOperationCollection operations, IOrderedSet<ITData, ITData> data)
+        private bool SequentialApply(IOperationCollection operations, ITOrderedSet<ITData, ITData> data)
         {
             switch (operations.CommonAction)
             {
@@ -51,7 +51,7 @@ namespace FenySoft.Qdb.Database
             }
         }
 
-        private bool CommonApply(IOperationCollection operations, IOrderedSet<ITData, ITData> data)
+        private bool CommonApply(IOperationCollection operations, ITOrderedSet<ITData, ITData> data)
         {
             int commonAction = operations.CommonAction;
 
@@ -120,7 +120,7 @@ namespace FenySoft.Qdb.Database
             return changes > 0;
         }
 
-        public bool Leaf(IOperationCollection operations, IOrderedSet<ITData, ITData> data)
+        public bool Leaf(IOperationCollection operations, ITOrderedSet<ITData, ITData> data)
         {
             //sequential optimization
             if (operations.AreAllMonotoneAndPoint && data.IsInternallyOrdered && (data.Count == 0 || operations.Locator.KeyComparer.Compare(data.Last.Key, operations[0].FromKey) < 0))

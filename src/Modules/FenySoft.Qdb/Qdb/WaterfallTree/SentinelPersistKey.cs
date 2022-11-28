@@ -3,7 +3,7 @@ using FenySoft.Core.Data;
 
 namespace FenySoft.Qdb.WaterfallTree
 {
-    public class SentinelPersistKey : IPersist<ITData>
+    public class SentinelPersistKey : ITPersist<ITData>
     {
         public static readonly SentinelPersistKey Instance = new SentinelPersistKey();
 

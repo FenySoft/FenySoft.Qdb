@@ -15,7 +15,7 @@ namespace FenySoft.Qdb.Remote
         }
 
         public Descriptor(long id, string name, TDataType keyDataType, TDataType recordDataType)
-            : this(id, name, Database.StructureType.XTABLE, keyDataType, recordDataType, DataTypeUtils.BuildType(keyDataType), DataTypeUtils.BuildType(recordDataType), DateTime.Now, DateTime.Now, DateTime.Now, null)
+            : this(id, name, Database.StructureType.XTABLE, keyDataType, recordDataType, TDataTypeUtils.BuildType(keyDataType), TDataTypeUtils.BuildType(recordDataType), DateTime.Now, DateTime.Now, DateTime.Now, null)
         {
         }
 
@@ -85,25 +85,25 @@ namespace FenySoft.Qdb.Remote
             set { InternalDescriptor.KeyEqualityComparer = value; }
         }
 
-        public IPersist<ITData> KeyPersist
+        public ITPersist<ITData> KeyPersist
         {
             get { return InternalDescriptor.KeyPersist; }
             set { InternalDescriptor.KeyPersist = value; }
         }
 
-        public IPersist<ITData> RecordPersist
+        public ITPersist<ITData> RecordPersist
         {
             get { return InternalDescriptor.RecordPersist; }
             set { InternalDescriptor.RecordPersist = value; }
         }
 
-        public IIndexerPersist<ITData> KeyIndexerPersist
+        public ITIndexerPersist<ITData> KeyIndexerPersist
         {
             get { return InternalDescriptor.KeyIndexerPersist; }
             set { InternalDescriptor.KeyIndexerPersist = value; }
         }
 
-        public IIndexerPersist<ITData> RecordIndexerPersist
+        public ITIndexerPersist<ITData> RecordIndexerPersist
         {
             get { return InternalDescriptor.RecordIndexerPersist; }
             set { InternalDescriptor.RecordIndexerPersist = value; }
@@ -184,11 +184,11 @@ namespace FenySoft.Qdb.Remote
         public IComparer<ITData> KeyComparer { get; set; }
         public IEqualityComparer<ITData> KeyEqualityComparer { get; set; }
 
-        public IPersist<ITData> KeyPersist { get; set; }
-        public IPersist<ITData> RecordPersist { get; set; }
+        public ITPersist<ITData> KeyPersist { get; set; }
+        public ITPersist<ITData> RecordPersist { get; set; }
 
-        public IIndexerPersist<ITData> KeyIndexerPersist { get; set; }
-        public IIndexerPersist<ITData> RecordIndexerPersist { get; set; }
+        public ITIndexerPersist<ITData> KeyIndexerPersist { get; set; }
+        public ITIndexerPersist<ITData> RecordIndexerPersist { get; set; }
 
         public DateTime CreateTime { get; set; }
         public DateTime ModifiedTime { get; set; }
@@ -255,8 +255,8 @@ namespace FenySoft.Qdb.Remote
             var keyDataType = TDataType.Deserialize(reader);
             var recordDataType = TDataType.Deserialize(reader);
 
-            var keyType = DataTypeUtils.BuildType(keyDataType);
-            var recordType = DataTypeUtils.BuildType(recordDataType);
+            var keyType = TDataTypeUtils.BuildType(keyDataType);
+            var recordType = TDataTypeUtils.BuildType(recordDataType);
 
             var createTime = new DateTime((long)CountCompression.Deserialize(reader));
             var modifiedTime = new DateTime((long)CountCompression.Deserialize(reader));

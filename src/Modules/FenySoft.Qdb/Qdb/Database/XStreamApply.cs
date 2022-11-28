@@ -21,7 +21,7 @@ namespace FenySoft.Qdb.Database
             return false;
         }
 
-        public bool Leaf(IOperationCollection operations, IOrderedSet<ITData, ITData> data)
+        public bool Leaf(IOperationCollection operations, ITOrderedSet<ITData, ITData> data)
         {
             bool isModified = false;
 
@@ -58,23 +58,23 @@ namespace FenySoft.Qdb.Database
 
         public Locator Locator { get; private set; }
 
-        private bool Replace(IOrderedSet<ITData, ITData> set, ReplaceOperation operation)
+        private bool Replace(ITOrderedSet<ITData, ITData> set, ReplaceOperation operation)
         {
             Debug.Assert(operation.Scope == OperationScope.Point);
 
-            long from = ((Data<long>)operation.FromKey).Value;
+            long from = ((TData<long>)operation.FromKey).Value;
             int localFrom = (int)(from % BLOCK_SIZE);
             long baseFrom = from - localFrom;
-            Data<long> baseKey = new Data<long>(baseFrom);
+            TData<long> baseKey = new TData<long>(baseFrom);
 
-            byte[] src = ((Data<byte[]>)operation.Record).Value;
+            byte[] src = ((TData<byte[]>)operation.Record).Value;
             Debug.Assert(src.Length <= BLOCK_SIZE);
             Debug.Assert(baseFrom == BLOCK_SIZE * ((from + src.Length - 1) / BLOCK_SIZE));
 
             ITData tmp;
             if (set.TryGetValue(baseKey, out tmp))
             {
-                Data<byte[]> rec = (Data<byte[]>)tmp;
+                TData<byte[]> rec = (TData<byte[]>)tmp;
 
                 if (localFrom == 0 && src.Length >= rec.Value.Length)
                     rec.Value = src;
@@ -96,22 +96,22 @@ namespace FenySoft.Qdb.Database
             else // if element with baseKey is not found
             {
                 if (localFrom == 0)
-                    set[baseKey] = new Data<byte[]>(src);
+                    set[baseKey] = new TData<byte[]>(src);
                 else
                 {
                     byte[] values = new byte[localFrom + src.Length];
                     src.CopyTo(values, localFrom);
-                    set[baseKey] = new Data<byte[]>(values);
+                    set[baseKey] = new TData<byte[]>(values);
                 }
             }
 
             return true;
         }
 
-        private bool Delete(IOrderedSet<ITData, ITData> set, DeleteRangeOperation operation)
+        private bool Delete(ITOrderedSet<ITData, ITData> set, DeleteRangeOperation operation)
         {
-            long from = ((Data<long>)operation.FromKey).Value;
-            long to = ((Data<long>)operation.ToKey).Value;
+            long from = ((TData<long>)operation.FromKey).Value;
+            long to = ((TData<long>)operation.ToKey).Value;
 
             int localFrom = (int)(from % BLOCK_SIZE);
             int localTo = (int)(to % BLOCK_SIZE);
@@ -124,14 +124,14 @@ namespace FenySoft.Qdb.Database
             bool isModified = false;
 
             if (internalFrom <= internalTo)
-                isModified = set.Remove(new Data<long>(internalFrom), true, new Data<long>(internalTo), true);
+                isModified = set.Remove(new TData<long>(internalFrom), true, new TData<long>(internalTo), true);
 
             ITData tmp;
-            Data<byte[]> record;
+            TData<byte[]> record;
 
-            if (localFrom > 0 && set.TryGetValue(new Data<long>(baseFrom), out tmp))
+            if (localFrom > 0 && set.TryGetValue(new TData<long>(baseFrom), out tmp))
             {
-                record = (Data<byte[]>)tmp;
+                record = (TData<byte[]>)tmp;
                 if (localFrom < record.Value.Length)
                 {
                     Array.Clear(record.Value, localFrom, baseFrom < baseTo ? record.Value.Length - localFrom : localTo - localFrom + 1);
@@ -141,16 +141,16 @@ namespace FenySoft.Qdb.Database
                     return isModified;
             }
 
-            if (localTo < BLOCK_SIZE - 1 && set.TryGetValue(new Data<long>(baseTo), out tmp))
+            if (localTo < BLOCK_SIZE - 1 && set.TryGetValue(new TData<long>(baseTo), out tmp))
             {
-                record = (Data<byte[]>)tmp;
+                record = (TData<byte[]>)tmp;
                 if (localTo < record.Value.Length - 1)
                 {
                     Array.Clear(record.Value, 0, localTo + 1);
                     isModified = true;
                 }
                 else
-                    isModified = set.Remove(new Data<long>(baseTo));
+                    isModified = set.Remove(new TData<long>(baseTo));
             }
 
             return isModified;

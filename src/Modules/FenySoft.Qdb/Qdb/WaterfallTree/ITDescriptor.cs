@@ -47,10 +47,10 @@ namespace FenySoft.Qdb.WaterfallTree
 
         IComparer<ITData> KeyComparer { get; set; }
         IEqualityComparer<ITData> KeyEqualityComparer { get; set; }
-        IPersist<ITData> KeyPersist { get; set; }
-        IPersist<ITData> RecordPersist { get; set; }
-        IIndexerPersist<ITData> KeyIndexerPersist { get; set; }
-        IIndexerPersist<ITData> RecordIndexerPersist { get; set; }
+        ITPersist<ITData> KeyPersist { get; set; }
+        ITPersist<ITData> RecordPersist { get; set; }
+        ITIndexerPersist<ITData> KeyIndexerPersist { get; set; }
+        ITIndexerPersist<ITData> RecordIndexerPersist { get; set; }
 
         DateTime CreateTime { get; }
         DateTime ModifiedTime { get; }

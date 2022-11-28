@@ -4,7 +4,7 @@ using FenySoft.Qdb.WaterfallTree;
 
 namespace FenySoft.Qdb.Database
 {
-    public class OrderedSetFactory : IOrderedSetFactory
+    public class OrderedSetFactory : ITOrderedSetFactory
     {
         public Locator Locator { get; private set; }
         
@@ -13,9 +13,9 @@ namespace FenySoft.Qdb.Database
             Locator = locator;
         }
 
-        public IOrderedSet<ITData, ITData> Create()
+        public ITOrderedSet<ITData, ITData> Create()
         {
-            var data = new OrderedSet<ITData, ITData>(Locator.KeyComparer, Locator.KeyEqualityComparer);
+            var data = new TOrderedSet<ITData, ITData>(Locator.KeyComparer, Locator.KeyEqualityComparer);
             
             return data;
         }

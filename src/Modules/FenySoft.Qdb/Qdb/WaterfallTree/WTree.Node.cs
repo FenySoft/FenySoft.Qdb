@@ -79,7 +79,7 @@ namespace FenySoft.Qdb.WaterfallTree
                     //string type = "";
                     //if (this is InternalNode)
                     //{
-                    //    recordCount = ((InternalNode)this).Branch.Cache.OperationCount;
+                    //    recordCount = ((InternalNode)this).Branch.TCache.OperationCount;
                     //    type = "Internal";
                     //}
                     //else

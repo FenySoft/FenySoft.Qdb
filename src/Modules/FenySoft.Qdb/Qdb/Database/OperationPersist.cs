@@ -1,14 +1,14 @@
 ﻿namespace FenySoft.Qdb.Database
 {
-    //public class OperationPersist : IPersist<IOperation>
+    //public class OperationPersist : ITPersist<IOperation>
     //{
-    //    private IPersist<ITData> KeyPersist;
-    //    private IPersist<ITData> RecordPersist;
+    //    private ITPersist<ITData> KeyPersist;
+    //    private ITPersist<ITData> RecordPersist;
 
     //    private Action<BinaryWriter, IOperation>[] writes;
     //    private Func<BinaryReader, IOperation>[] reads;
 
-    //    public OperationPersist(IPersist<ITData> keyPersist, IPersist<ITData> recordPersist)
+    //    public OperationPersist(ITPersist<ITData> keyPersist, ITPersist<ITData> recordPersist)
     //    {
     //        KeyPersist = keyPersist;
     //        RecordPersist = recordPersist;

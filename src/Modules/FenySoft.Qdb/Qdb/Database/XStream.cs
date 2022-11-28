@@ -27,8 +27,8 @@ namespace FenySoft.Qdb.Database
         {
             foreach (var row in Table.Backward())
             {
-                var key = (Data<long>)row.Key;
-                var rec = (Data<byte[]>)row.Value;
+                var key = (TData<long>)row.Key;
+                var rec = (TData<byte[]>)row.Value;
 
                 isModified = false;
 
@@ -52,8 +52,8 @@ namespace FenySoft.Qdb.Database
                 {
                     int chunk = Math.Min(BLOCK_SIZE - (int)(position % BLOCK_SIZE), count);
 
-                    ITData key = new Data<long>(position);
-                    ITData record = new Data<byte[]>(buffer.Middle(offset, chunk));
+                    ITData key = new TData<long>(position);
+                    ITData record = new TData<byte[]>(buffer.Middle(offset, chunk));
                     Table[key] = record;
 
                     position += chunk;
@@ -88,8 +88,8 @@ namespace FenySoft.Qdb.Database
                 if (result <= 0)
                     return 0;
 
-                var fromKey = new Data<long>(position - position % BLOCK_SIZE);
-                var toKey = new Data<long>(position + count - 1);
+                var fromKey = new TData<long>(position - position % BLOCK_SIZE);
+                var toKey = new TData<long>(position + count - 1);
 
                 long currentKey = -1;
 
@@ -99,8 +99,8 @@ namespace FenySoft.Qdb.Database
 
                 foreach (var kv in Table.Forward(fromKey, true, toKey, true))
                 {
-                    long key = ((Data<long>)kv.Key).Value;
-                    byte[] source = ((Data<byte[]>)kv.Value).Value;
+                    long key = ((TData<long>)kv.Key).Value;
+                    byte[] source = ((TData<byte[]>)kv.Value).Value;
 
                     if (currentKey < 0)
                     {
@@ -268,8 +268,8 @@ namespace FenySoft.Qdb.Database
         {
             lock (SyncRoot)
             {
-                var fromKey = new Data<long>(position);
-                var toKey = new Data<long>(position + count - 1);
+                var fromKey = new TData<long>(position);
+                var toKey = new TData<long>(position + count - 1);
                 Table.Delete(fromKey, toKey);
 
                 position += count;

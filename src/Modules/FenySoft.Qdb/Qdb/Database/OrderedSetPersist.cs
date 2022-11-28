@@ -6,21 +6,21 @@ using FenySoft.Core.Persist;
 
 namespace FenySoft.Qdb.Database
 {
-    public class OrderedSetPersist : IPersist<IOrderedSet<ITData, ITData>>
+    public class OrderedSetPersist : ITPersist<ITOrderedSet<ITData, ITData>>
     {
         public const byte VERSION = 40;
 
-        private IIndexerPersist<ITData> keyIndexerPersist;
-        private IIndexerPersist<ITData> recordIndexerPersist;
+        private ITIndexerPersist<ITData> keyIndexerPersist;
+        private ITIndexerPersist<ITData> recordIndexerPersist;
 
-        private IPersist<ITData> keyPersist;
-        private IPersist<ITData> recordPersist;
+        private ITPersist<ITData> keyPersist;
+        private ITPersist<ITData> recordPersist;
 
-        private IOrderedSetFactory orderedSetFactory;
+        private ITOrderedSetFactory orderedSetFactory;
 
         private bool verticalCompression;
 
-        public OrderedSetPersist(IIndexerPersist<ITData> keyIndexerPersist, IIndexerPersist<ITData> recordIndexerPersist, IOrderedSetFactory orderedSetFactory)
+        public OrderedSetPersist(ITIndexerPersist<ITData> keyIndexerPersist, ITIndexerPersist<ITData> recordIndexerPersist, ITOrderedSetFactory orderedSetFactory)
         {
             this.keyIndexerPersist = keyIndexerPersist;
             this.recordIndexerPersist = recordIndexerPersist;
@@ -28,7 +28,7 @@ namespace FenySoft.Qdb.Database
             verticalCompression = true;
         }
 
-        public OrderedSetPersist(IPersist<ITData> keyPersist, IPersist<ITData> recordPersist, IOrderedSetFactory orderedSetFactory)
+        public OrderedSetPersist(ITPersist<ITData> keyPersist, ITPersist<ITData> recordPersist, ITOrderedSetFactory orderedSetFactory)
         {
             this.keyPersist = keyPersist;
             this.recordPersist = recordPersist;
@@ -36,7 +36,7 @@ namespace FenySoft.Qdb.Database
             verticalCompression = false;
         }
 
-        private void WriteRaw(BinaryWriter writer, IOrderedSet<ITData, ITData> data)
+        private void WriteRaw(BinaryWriter writer, ITOrderedSet<ITData, ITData> data)
         {
             lock (data)
             {
@@ -51,7 +51,7 @@ namespace FenySoft.Qdb.Database
             }
         }
 
-        private IOrderedSet<ITData, ITData> ReadRaw(BinaryReader reader)
+        private ITOrderedSet<ITData, ITData> ReadRaw(BinaryReader reader)
         {
             int count = reader.ReadInt32();
             bool isOrdered = reader.ReadBoolean();
@@ -72,7 +72,7 @@ namespace FenySoft.Qdb.Database
             return data;
         }
 
-        private void WriteVertical(BinaryWriter writer, IOrderedSet<ITData, ITData> data)
+        private void WriteVertical(BinaryWriter writer, ITOrderedSet<ITData, ITData> data)
         {
             KeyValuePair<ITData, ITData>[] rows;
 
@@ -120,7 +120,7 @@ namespace FenySoft.Qdb.Database
 
         private static readonly KeyValuePairHelper<ITData, ITData> helper = new KeyValuePairHelper<ITData, ITData>();
 
-        private IOrderedSet<ITData, ITData> ReadVertical(BinaryReader reader)
+        private ITOrderedSet<ITData, ITData> ReadVertical(BinaryReader reader)
         {
             int count = (int)CountCompression.Deserialize(reader);
             bool isOrdered = reader.ReadBoolean();
@@ -155,7 +155,7 @@ namespace FenySoft.Qdb.Database
             return data;
         }
 
-        public void Write(BinaryWriter writer, IOrderedSet<ITData, ITData> item)
+        public void Write(BinaryWriter writer, ITOrderedSet<ITData, ITData> item)
         {
             writer.Write(VERSION);
 
@@ -165,7 +165,7 @@ namespace FenySoft.Qdb.Database
                 WriteRaw(writer, item);
         }
 
-        public IOrderedSet<ITData, ITData> Read(BinaryReader reader)
+        public ITOrderedSet<ITData, ITData> Read(BinaryReader reader)
         {
             if (reader.ReadByte() != VERSION)
                 throw new Exception("Invalid DataContainerPersist version.");

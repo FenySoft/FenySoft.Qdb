@@ -11,8 +11,8 @@ namespace FenySoft.Qdb.WaterfallTree
 
         public IComparer<ITData> Comparer { get; set; }
         public IEqualityComparer<ITData> EqualityComparer { get; set; }
-        public IPersist<ITData> Persist { get; set; }
-        public IIndexerPersist<ITData> IndexerPersist { get; set; }
+        public ITPersist<ITData> Persist { get; set; }
+        public ITIndexerPersist<ITData> IndexerPersist { get; set; }
 
         public TypeEngine()
         {
@@ -22,15 +22,15 @@ namespace FenySoft.Qdb.WaterfallTree
         {
             TypeEngine descriptor = new TypeEngine();
 
-            descriptor.Persist = new DataPersist(type, null, AllowNull.OnlyMembers);
+            descriptor.Persist = new TDataPersist(type, null, AllowNull.OnlyMembers);
 
-            if (DataTypeUtils.IsAllPrimitive(type) || type == typeof(Guid))
+            if (TDataTypeUtils.IsAllPrimitive(type) || type == typeof(Guid))
             {
-                descriptor.Comparer = new DataComparer(type);
-                descriptor.EqualityComparer = new DataEqualityComparer(type);
+                descriptor.Comparer = new TDataComparer(type);
+                descriptor.EqualityComparer = new TDataEqualityComparer(type);
 
                 if (type != typeof(Guid))
-                    descriptor.IndexerPersist = new DataIndexerPersist(type);
+                    descriptor.IndexerPersist = new TDataIndexerPersist(type);
             }
 
             return descriptor;
