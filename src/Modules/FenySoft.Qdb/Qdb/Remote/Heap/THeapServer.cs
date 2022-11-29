@@ -8,16 +8,16 @@ namespace FenySoft.Qdb.Remote.Heap
     private CancellationTokenSource FCancellationTokenSource;
     private Thread? FWorker;
 
-    public readonly IHeap? Heap;
+    public readonly ITHeap? Heap;
     public readonly TTcpServer? TcpServer;
 
-    public THeapServer(IHeap? AHeap, TTcpServer? ATcpServer)
+    public THeapServer(ITHeap? AHeap, TTcpServer? ATcpServer)
     {
       Heap = AHeap ?? throw new ArgumentNullException("AHeap");
       TcpServer = ATcpServer ?? throw new ArgumentNullException("ATcpServer");
     }
 
-    public THeapServer(IHeap? AHeap, int APort = 7183) : this(AHeap, new TTcpServer(APort))
+    public THeapServer(ITHeap? AHeap, int APort = 7183) : this(AHeap, new TTcpServer(APort))
     {
     }
 
@@ -63,72 +63,72 @@ namespace FenySoft.Qdb.Remote.Heap
             MemoryStream ms = new MemoryStream();
             BinaryWriter writer = new BinaryWriter(ms);
 
-            var code = (RemoteHeapCommandCodes)reader.ReadByte();
+            var code = (TRemoteHeapCommandCodes)reader.ReadByte();
 
             switch (code)
             {
-              case RemoteHeapCommandCodes.ObtainHandle:
-                ObtainHandleCommand.WriteResponse(writer, Heap.ObtainNewHandle());
+              case TRemoteHeapCommandCodes.ObtainHandle:
+                TObtainHandleCommand.WriteResponse(writer, Heap.ObtainNewHandle());
                 break;
 
-              case RemoteHeapCommandCodes.ReleaseHandle:
+              case TRemoteHeapCommandCodes.ReleaseHandle:
               {
-                var handle = ReleaseHandleCommand.ReadRequest(reader).Handle;
+                var handle = TReleaseHandleCommand.ReadRequest(reader).Handle;
                 Heap.Release(handle);
                 break;
               }
 
-              case RemoteHeapCommandCodes.HandleExist:
+              case TRemoteHeapCommandCodes.HandleExist:
               {
-                long handle = HandleExistCommand.ReadRequest(reader).Handle;
-                HandleExistCommand.WriteResponse(writer, Heap.Exists(handle));
+                long handle = THandleExistCommand.ReadRequest(reader).Handle;
+                THandleExistCommand.WriteResponse(writer, Heap.Exists(handle));
                 break;
               }
 
-              case RemoteHeapCommandCodes.WriteCommand:
-                var cmd = WriteCommand.ReadRequest(reader);
+              case TRemoteHeapCommandCodes.WriteCommand:
+                var cmd = TWriteCommand.ReadRequest(reader);
                 Heap.Write(cmd.Handle, cmd.Buffer, cmd.Index, cmd.Count);
 
                 break;
 
-              case RemoteHeapCommandCodes.ReadCommand:
+              case TRemoteHeapCommandCodes.ReadCommand:
               {
-                var handle = ReadCommand.ReadRequest(reader)
+                var handle = TReadCommand.ReadRequest(reader)
                                         .Handle;
 
-                ReadCommand.WriteResponse(writer, Heap.Read(handle));
+                TReadCommand.WriteResponse(writer, Heap.Read(handle));
 
                 break;
               }
 
-              case RemoteHeapCommandCodes.CommitCommand:
+              case TRemoteHeapCommandCodes.CommitCommand:
                 Heap.Commit();
 
                 break;
 
-              case RemoteHeapCommandCodes.CloseCommand:
+              case TRemoteHeapCommandCodes.CloseCommand:
                 Heap.Close();
 
                 break;
 
-              case RemoteHeapCommandCodes.SetTag:
-                Heap.Tag = SetTagCommand.ReadRequest(reader)
+              case TRemoteHeapCommandCodes.SetTag:
+                Heap.Tag = TSetTagCommand.ReadRequest(reader)
                                         .Tag;
 
                 break;
 
-              case RemoteHeapCommandCodes.GetTag:
-                GetTagCommand.WriteResponse(writer, Heap.Tag);
+              case TRemoteHeapCommandCodes.GetTag:
+                TGetTagCommand.WriteResponse(writer, Heap.Tag);
 
                 break;
 
-              case RemoteHeapCommandCodes.Size:
-                SizeCommand.WriteResponse(writer, Heap.Size);
+              case TRemoteHeapCommandCodes.Size:
+                TSizeCommand.WriteResponse(writer, Heap.Size);
 
                 break;
 
-              case RemoteHeapCommandCodes.DataBaseSize:
-                DataBaseSizeCommand.WriteResponse(writer, Heap.DataSize);
+              case TRemoteHeapCommandCodes.DataBaseSize:
+                TDataBaseSizeCommand.WriteResponse(writer, Heap.DataSize);
 
                 break;
 

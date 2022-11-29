@@ -28,7 +28,7 @@ namespace FenySoft.Qdb.Database
         /// <summary>
         /// 
         /// </summary>
-        XFile OpenXFile(string AName);
+        TXFile OpenXFile(string AName);
 
         ITDescriptor this[string AName] { get; }
         ITDescriptor Find(long AId);
@@ -48,9 +48,9 @@ namespace FenySoft.Qdb.Database
         int CacheSize { get; set; }
 
         /// <summary>
-        /// Heap assigned to the StorageEngine instance.
+        /// THeap assigned to the TStorageEngine instance.
         /// </summary>
-        IHeap Heap { get; }
+        ITHeap Heap { get; }
 
         void Commit();
         void Close();
