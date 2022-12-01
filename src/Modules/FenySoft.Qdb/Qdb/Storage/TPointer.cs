@@ -1,36 +1,54 @@
 ﻿namespace FenySoft.Qdb.Storage
 {
-    public class TPointer
+  public class TPointer
+  {
+    #region Fields..
+
+    private readonly long FVersion;
+    private TPtr FPtr;
+
+    #endregion
+
+    #region Properties..
+
+    public long Version => FVersion;
+    public TPtr Ptr => FPtr;
+    public int RefCount { get; set; }
+    public bool IsReserved { get; set; }
+
+    #endregion
+    
+    #region Constructors..
+
+    public TPointer(long AVersion, TPtr APtr)
     {
-        public long Version;
-        public TPtr Ptr;
-
-        public bool IsReserved;
-        public int RefCount;
-
-        public TPointer(long version, TPtr ptr)
-        {
-            Version = version;
-            Ptr = ptr;
-        }
-
-        public void Serialize(BinaryWriter writer)
-        {
-            writer.Write(Version);
-            Ptr.Serialize(writer);
-        }
-
-        public static TPointer Deserialize(BinaryReader reader)
-        {
-            long version = reader.ReadInt64();
-            TPtr ptr = TPtr.Deserialize(reader);
-
-            return new TPointer(version, ptr);
-        }
-
-        public override string ToString()
-        {
-            return String.Format("Version {0}, TPtr {1}", Version, Ptr);
-        }
+      FVersion = AVersion;
+      FPtr = APtr;
+      RefCount = 0;
     }
+
+    #endregion
+
+    #region Methods..
+
+    public void Serialize(BinaryWriter AWriter)
+    {
+      AWriter.Write(FVersion);
+      FPtr.Serialize(AWriter);
+    }
+
+    public static TPointer Deserialize(BinaryReader AReader)
+    {
+      long version = AReader.ReadInt64();
+      TPtr ptr = TPtr.Deserialize(AReader);
+      return new TPointer(version, ptr);
+    }
+
+    public override string ToString()
+    {
+      return $"Version {FVersion}, TPtr {FPtr}";
+    }
+
+    #endregion
+  }
 }
